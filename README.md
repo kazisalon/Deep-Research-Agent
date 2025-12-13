@@ -1,39 +1,97 @@
 # Deep Research Agent 🔬
 
-A production-ready AI research assistant that autonomously searches the web, gathers information, and synthesizes comprehensive reports using LangGraph and Gemini AI.
+> **An autonomous AI research assistant that searches the web, gathers information, and synthesizes comprehensive reports using LangGraph + Groq LLM.**
 
-## 🌟 Features
+[![Python 3.13](https://img.shields.io/badge/Python-3.13-blue.svg)](https://www.python.org/downloads/)
+[![LangGraph](https://img.shields.io/badge/LangGraph-Latest-green.svg)](https://langchain-ai.github.io/langgraph/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-- **Autonomous Research**: Automatically searches the web and gathers current information
-- **Smart Orchestration**: Uses LangGraph for reliable workflow management
-- **Cost Tracking**: Monitors API usage and costs
-- **Error Handling**: Robust retry logic and graceful degradation
-- **Professional Structure**: Modular, scalable, and maintainable codebase
-- **Comprehensive Logging**: Debug and monitor agent behavior
-- **Type Safety**: Full type hints for better IDE support
+## 📊 Architecture
 
-## 🏗️ Architecture
+![Architecture Diagram](agent_architecture.png)
 
+The agent uses a graph-based workflow with three key components:
+
+1. **Search Node** - Gathers real-time web data using Tavily API
+2. **Router** - Intelligently decides whether to continue searching or generate report
+3. **Writer Node** - Synthesizes findings using Groq's Llama 3.3 70B model
+
+## 🚀 What It Does
+
+Takes any research question and:
+- 🔍 Searches the web **3 times** with different strategies
+- 📊 Gathers **real-time data** from multiple sources
+- 🤖 Uses **Llama 3.3 70B** (via Groq) to write professional reports
+- 💰 Tracks costs (average: **$0.009 per research cycle**)
+- ⚡ Completes in ~18 seconds
+
+### Example Output
+
+**Query:** *"What is the current stock price of NVIDIA and why is it moving today?"*
+
+**Result:**
+- 3 web searches executed
+- 2,662 tokens processed
+- Comprehensive report with citations
+- **Total cost: $0.009**
+
+## 🎯 Why This Matters
+
+Standard LLMs like ChatGPT have two critical limitations:
+
+| Problem | Solution |
+|---------|----------|
+| **Knowledge Cutoff** - Can't access info after training | ✅ Live web search integration |
+| **No Internet** - Cannot browse or search | ✅ Tavily API integration |
+
+This agent bridges that gap, giving AI models access to current, real-time information.
+
+## 🏗️ Tech Stack
+
+- **Python 3.13** - Latest stable release
+- **LangGraph** - Orchestration framework for AI agents
+- **Groq API** - Fast, free LLM inference (Llama 3.3 70B)
+- **Tavily** - Web search API optimized for AI
+- **Pydantic** - Settings and validation
+- **OpenAI SDK** - For Groq API compatibility
+
+## ⚡ Quick Start
+
+### 1. Clone & Setup
+
+```bash
+git clone https://github.com/kazisalon/Deep-Research-Agent.git
+cd Deep-Research-Agent
+
+# Create virtual environment
+python -m venv venv
+
+# Activate (Windows)
+venv\Scripts\activate
+# Activate (Linux/Mac)
+source venv/bin/activate
+
+# Install dependencies
+pip install -r requirements.txt
 ```
-┌─────────────┐
-│ User Query  │
-└──────┬──────┘
-       ↓
-  ┌─────────────┐
-  │ Search Node │ ← Tavily Web Search
-  └──────┬──────┘
-         ↓
-  ┌─────────────┐
-  │   Router    │ ← Decide: Continue or Write?
-  └──────┬──────┘
-         │
-    ┌────┴────┐
-    ↓         ↓
- [Loop]   ┌─────────────┐
-          │ Writer Node │ ← Gemini AI Synthesis
-          └──────┬──────┘
-                 ↓
-            [Final Report]
+
+### 2. Configure API Keys
+
+```bash
+# Copy environment template
+cp .env.example .env
+
+# Edit .env and add your keys
+```
+
+Get free API keys:
+- **Groq**: https://console.groq.com (Free tier: 30 requests/minute)
+- **Tavily**: https://tavily.com (Free tier: 1000 searches/month)
+
+### 3. Run the Agent
+
+```bash
+python main.py
 ```
 
 ## 📁 Project Structure
@@ -41,96 +99,59 @@ A production-ready AI research assistant that autonomously searches the web, gat
 ```
 Deep-Research-Agent/
 ├── config/
-│   ├── __init__.py
-│   └── settings.py          # Configuration management
+│   ├── settings.py          # Centralized configuration
+│   └── __init__.py
 ├── src/
 │   ├── agent/
-│   │   ├── __init__.py
-│   │   ├── state.py         # Agent state definition
-│   │   ├── nodes.py         # Worker nodes (Search, Writer)
+│   │   ├── state.py         # Type-safe state definition
+│   │   ├── nodes.py         # SearchNode & WriterNode
 │   │   ├── routers.py       # Decision logic
 │   │   └── graph.py         # LangGraph workflow
 │   ├── tools/
-│   │   ├── __init__.py
-│   │   └── search.py        # Tavily search wrapper
+│   │   └── search.py        # Tavily wrapper with retry
 │   └── utils/
-│       ├── __init__.py
-│       ├── logger.py        # Logging setup
-│       └── cost_tracker.py  # API cost tracking
-├── .env.example             # Environment template
-├── .gitignore
-├── requirements.txt
+│       ├── logger.py        # Professional logging
+│       └── cost_tracker.py  # API usage tracking
 ├── main.py                  # Entry point
+├── generate_diagram.py      # Architecture diagram generator
+├── requirements.txt
+├── .env.example
 └── README.md
 ```
 
-## 🚀 Quick Start
+## 🎨 Generate Architecture Diagram
 
-### 1. Prerequisites
-
-- Python 3.10+ (Recommended: 3.11 or 3.12)
-- Tavily API key ([Get it here](https://tavily.com))
-- Google AI API key ([Get it here](https://aistudio.google.com/apikey))
-
-### 2. Installation
+Want to visualize the workflow? Run:
 
 ```bash
-# Clone or navigate to the project
-cd Deep-Research-Agent
-
-# Create virtual environment
-python -m venv venv
-
-# Activate virtual environment
-# Windows:
-venv\Scripts\activate
-# Linux/Mac:
-source venv/bin/activate
-
-# Install dependencies
-pip install -r requirements.txt
+pip install grandalf
+python generate_diagram.py
 ```
 
-### 3. Configuration
+This generates `agent_architecture.png` directly from your code!
 
-```bash
-# Copy environment template
-cp .env.example .env
-
-# Edit .env and add your API keys
-# TAVILY_API_KEY=your_actual_key_here
-# GOOGLE_API_KEY=your_actual_key_here
-```
-
-### 4. Run the Agent
-
-```bash
-python main.py
-```
-
-## 🔧 Configuration Options
+## 🔧 Configuration
 
 Edit `.env` to customize:
 
 | Variable | Description | Default |
 |----------|-------------|---------|
+| `GROQ_API_KEY` | Groq API key | Required |
 | `TAVILY_API_KEY` | Tavily search API key | Required |
-| `GOOGLE_API_KEY` | Google AI API key | Required |
-| `MODEL_NAME` | Gemini model to use | gemini-1.5-flash |
-| `MODEL_TEMPERATURE` | Creativity level (0-1) | 0 |
-| `MAX_SEARCH_ATTEMPTS` | Max search iterations | 3 |
+| `MAX_SEARCH_ATTEMPTS` | Number of searches | 3 |
 | `MAX_SEARCH_RESULTS` | Results per search | 3 |
+| `MODEL_TEMPERATURE` | LLM creativity (0-1) | 0 |
 | `LOG_LEVEL` | Logging verbosity | INFO |
 | `TRACK_COSTS` | Enable cost tracking | true |
 
-## 💡 Usage Examples
+## 💡 Customization
 
-### Customize the Query
+### Change Research Query
 
 Edit `main.py`:
 
 ```python
-user_query = "What are the latest breakthroughs in quantum computing?"
+user_query = "Your research question here"
 ```
 
 ### Adjust Search Depth
@@ -138,215 +159,120 @@ user_query = "What are the latest breakthroughs in quantum computing?"
 In `.env`:
 
 ```bash
-MAX_SEARCH_ATTEMPTS=5  # Do 5 searches before writing
+MAX_SEARCH_ATTEMPTS=5  # Do 5 searches instead of 3
 ```
 
-### Change the Model
+### Switch LLM Model
 
-In `.env`:
+In `src/agent/nodes.py`, change:
+
+```python
+model="llama-3.3-70b-versatile"  # to another Groq model
+```
+
+Available Groq models:
+- `llama-3.3-70b-versatile` (Best quality, used by default)
+- `llama-3.1-8b-instant` (Faster, cheaper)
+- `gemma2-9b-it` (Good balance)
+
+## 📊 Cost Analysis
+
+Based on actual usage:
+
+| Component | Cost | Notes |
+|-----------|------|-------|
+| Tavily Search | $0.001/search | 3 searches = $0.003 |
+| Groq LLM | ~$0.006/query | Free tier available |
+| **Total** | **~$0.009** | Per research cycle |
+
+**Annual cost** (100 queries/day): ~$328
+
+Compare to:
+- OpenAI GPT-4: ~$50/100 queries
+- Claude 3 Opus: ~$75/100 queries
+
+## 🚀 Advanced Features
+
+### Production Deployment
+
+See `interview-prep.md` for:
+- FastAPI wrapper
+- Redis caching
+- Docker deployment
+- Monitoring setup
+
+### Testing
 
 ```bash
-MODEL_NAME=gemini-1.5-pro  # Use Pro model for better quality
+pytest tests/  # (tests not included yet - contribute!)
 ```
 
-## 🧪 Testing
+## 🎓 Learning Resources
 
-Create a test file:
+This project demonstrates:
 
-```python
-# test_basic.py
-from src.agent.routers import should_continue_search
-
-def test_router():
-    state = {"attempts": 0, "error": None}
-    assert should_continue_search(state) == "search"
-    
-    state = {"attempts": 3, "error": None}
-    assert should_continue_search(state) == "writer"
-```
-
-Run tests:
-
-```bash
-pytest test_basic.py
-```
-
-## 📊 Cost Tracking
-
-The agent automatically tracks:
-- Number of search API calls
-- Number of LLM API calls
-- Estimated token usage
-- Total cost in USD
-
-Example output:
-
-```
-💰 COST SUMMARY
-================================================================================
-  Total Cost Usd: 0.0023
-  Search Calls: 3
-  Llm Calls: 1
-  Total Tokens: 2847
-  Session Duration Seconds: 5.43
-================================================================================
-```
-
-## 🔍 How It Works
-
-### 1. State Management
-
-The agent maintains shared state across all nodes:
-
-```python
-{
-    "task": "User's research query",
-    "search_results": ["result 1", "result 2", ...],  # Accumulates
-    "attempts": 2,
-    "error": None,
-    "final_report": "Generated report text"
-}
-```
-
-### 2. Search Node
-
-- Calls Tavily API to search the web
-- Implements retry logic (3 attempts with exponential backoff)
-- Tracks API costs
-- Handles errors gracefully
-
-### 3. Router (Decision Maker)
-
-- Currently: Simple counter-based logic
-- Decides if more searches are needed
-- Can be upgraded to LLM-based quality evaluation
-
-### 4. Writer Node
-
-- Synthesizes all search results
-- Uses Gemini to generate comprehensive report
-- Includes source citations
-- Formats output professionally
-
-## 🎯 Extending the Agent
-
-### Add Advanced Routing
-
-Replace simple counter logic with LLM-based evaluation:
-
-```python
-# In src/agent/routers.py
-def smart_router(state: AgentState) -> Literal["search", "writer"]:
-    from langchain_google_genai import ChatGoogleGenerativeAI
-    
-    model = ChatGoogleGenerativeAI(model="gemini-1.5-flash")
-    
-    prompt = f"""
-    Task: {state['task']}
-    Data collected: {len(state['search_results'])} results
-    
-    Is this enough to write a comprehensive answer?
-    Reply: SEARCH or WRITE
-    """
-    
-    decision = model.invoke(prompt)
-    return "search" if "SEARCH" in decision.content else "writer"
-```
-
-### Add Caching
-
-```python
-# In src/tools/search.py
-import hashlib
-import json
-
-class SearchTool:
-    def __init__(self):
-        self.cache = {}
-    
-    def search(self, query: str):
-        cache_key = hashlib.md5(query.encode()).hexdigest()
-        
-        if cache_key in self.cache:
-            logger.info("Cache hit!")
-            return self.cache[cache_key]
-        
-        results = self.tavily.invoke(query)
-        self.cache[cache_key] = results
-        return results
-```
-
-### Add Multiple Tools
-
-Create new nodes for different data sources:
-
-```python
-# src/agent/nodes.py
-class DatabaseNode:
-    def __call__(self, state):
-        # Query internal database
-        ...
-
-class CalculatorNode:
-    def __call__(self, state):
-        # Perform calculations
-        ...
-```
+✅ **Agentic AI Patterns** - ReAct, tool use, decision-making  
+✅ **LangGraph** - Graph-based orchestration  
+✅ **Production Python** - Type hints, logging, config management  
+✅ **API Integration** - Groq, Tavily  
+✅ **Cost Optimization** - Tracking and minimizing API costs  
 
 ## 🐛 Troubleshooting
 
 ### Python Version Issues
 
-If you see `TypeError: unhashable type: 'list'`:
+This requires Python 3.10+. Upgrade if needed:
 
 ```bash
-# Upgrade to Python 3.10+
-python --version  # Check current version
-
-# Create new venv with Python 3.11
-python3.11 -m venv venv
-```
-
-### API Key Errors
-
-```bash
-# Verify .env file exists
-ls -la .env
-
-# Check if keys are set
-cat .env | grep API_KEY
+# Download Python 3.13 from python.org
+python --version  # Should show 3.13.x
 ```
 
 ### Import Errors
 
 ```bash
-# Reinstall dependencies
 pip install --upgrade -r requirements.txt
-
-# Clear cache
-pip cache purge
 ```
 
-## 📚 Learn More
+### API Key Errors
 
-- [LangGraph Documentation](https://langchain-ai.github.io/langgraph/)
-- [Tavily API Docs](https://docs.tavily.com/)
-- [Google AI Studio](https://aistudio.google.com/)
+Verify keys are set in `.env`:
+
+```bash
+cat .env | grep API_KEY  # Linux/Mac
+type .env | findstr API_KEY  # Windows
+```
 
 ## 🤝 Contributing
 
-Improvements welcome! Consider adding:
-- Unit tests
-- FastAPI wrapper for REST API
-- Redis caching layer
-- Multi-agent collaboration
-- Streaming responses
-- Cost optimization strategies
+Contributions welcome! Areas for improvement:
+
+- [ ] Add unit tests
+- [ ] FastAPI REST API wrapper
+- [ ] Redis caching layer
+- [ ] Multi-agent collaboration
+- [ ] Streaming responses
+- [ ] Web UI
 
 ## 📄 License
 
-MIT License - Feel free to use in your projects!
+MIT License - feel free to use in your projects!
+
+## 🙏 Acknowledgments
+
+Built with:
+- [LangGraph](https://langchain-ai.github.io/langgraph/) - Orchestration framework
+- [Groq](https://groq.com/) - Fast LLM inference
+- [Tavily](https://tavily.com/) - AI-optimized search
+
+## 📧 Contact
+
+Questions? Open an issue or reach out:
+- GitHub: [@kazisalon](https://github.com/kazisalon)
+- Project: [Deep-Research-Agent](https://github.com/kazisalon/Deep-Research-Agent)
 
 ---
 
-**Built with ❤️ using LangGraph, Gemini AI, and Tavily Search**
+**⭐ If you found this useful, please star the repo!**
+
+Built with ❤️ using Python 3.13, LangGraph, and Groq
