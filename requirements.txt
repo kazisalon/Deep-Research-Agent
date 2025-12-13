@@ -1,0 +1,20 @@
+# Core dependencies
+langgraph>=0.0.20
+langchain>=0.1.0
+langchain-google-genai>=1.0.0
+langchain-community>=0.0.20
+
+# Tools
+tavily-python>=0.3.0
+
+# Configuration
+python-dotenv>=1.0.0
+
+# Utilities
+pydantic>=2.0.0
+pydantic-settings>=2.0.0
+
+# Optional: Production features
+# fastapi>=0.110.0
+# uvicorn>=0.27.0
+# redis>=5.0.0

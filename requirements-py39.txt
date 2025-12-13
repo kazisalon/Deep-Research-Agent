@@ -1,0 +1,22 @@
+# Python 3.9 Compatible Dependencies
+# These are older versions that work with Python 3.9
+
+# Core dependencies (pinned to 3.9-compatible versions)
+langgraph==0.0.55
+langchain==0.1.20
+langchain-google-genai==1.0.1
+langchain-community==0.0.38
+
+# Tools (compatible versions)
+tavily-python==0.3.0
+
+# Configuration
+python-dotenv==1.0.0
+
+# Utilities (pinned versions)
+pydantic==2.5.0
+pydantic-settings==2.1.0
+
+# Fix aiohttp compatibility
+aiohttp==3.9.0  # Last version working well with Python 3.9
+typing-extensions==4.8.0
