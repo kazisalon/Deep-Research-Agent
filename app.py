@@ -25,174 +25,330 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Clean Professional Theme
+# Premium Theme with #2e79a7
 st.markdown("""
 <style>
-    /* Import Fonts and Icons */
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
-    @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css');
+    /* Import Fonts */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
     
     * {
-        font-family: 'Inter', sans-serif;
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     }
     
-    /* Dark Background */
+    /* Premium Dark Background with Texture */
     .stApp {
-        background: #0a0e27;
+        background: linear-gradient(135deg, #0a0e27 0%, #0f1629 100%);
+        background-attachment: fixed;
     }
     
-    /* Reduce spacing */
+    .stApp::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: 
+            radial-gradient(circle at 20% 30%, rgba(46, 121, 167, 0.08) 0%, transparent 50%),
+            radial-gradient(circle at 80% 70%, rgba(46, 121, 167, 0.05) 0%, transparent 50%);
+        pointer-events: none;
+        z-index: 0;
+    }
+    
+    /* Reduce top spacing */
     .block-container {
-        padding-top: 2rem !important;
-        max-width: 1200px;
+        padding-top: 3rem !important;
+        padding-bottom: 3rem !important;
+        max-width: 1400px;
     }
     
-    /* Header */
+    /* Premium Header */
     .main-header {
-        font-size: 2.5rem;
+        font-size: 3rem;
         font-weight: 700;
-        color: #667eea;
-        margin: 0 0 0.5rem 0;
+        color: #ffffff;
+        margin: 0;
+        letter-spacing: -0.02em;
+        text-shadow: 0 2px 10px rgba(46, 121, 167, 0.3);
     }
     
     .subtitle {
-        font-size: 1rem;
-        color: rgba(255, 255, 255, 0.6);
-        margin-bottom: 2rem;
+        font-size: 1.1rem;
+        color: rgba(255, 255, 255, 0.65);
+        margin-bottom: 3rem;
+        font-weight: 400;
+        letter-spacing: 0.02em;
     }
     
-    /* Cards */
+    /* Premium Glass Cards */
     .glass-card {
-        background: rgba(255, 255, 255, 0.05);
-        border-radius: 12px;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        padding: 1.5rem;
-        transition: all 0.2s ease;
+        background: rgba(255, 255, 255, 0.04);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-radius: 16px;
+        border: 1px solid rgba(46, 121, 167, 0.15);
+        padding: 2rem;
+        box-shadow: 
+            0 8px 32px 0 rgba(0, 0, 0, 0.4),
+            inset 0 1px 0 0 rgba(255, 255, 255, 0.05);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
     
     .glass-card:hover {
         transform: translateY(-2px);
-        border-color: rgba(102, 126, 234, 0.3);
+        border-color: rgba(46, 121, 167, 0.3);
+        box-shadow: 
+            0 12px 48px 0 rgba(46, 121, 167, 0.15),
+            inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
     }
     
-    /* Input */
+    /* Premium Input Styling */
     .stTextArea textarea {
-        background: rgba(255, 255, 255, 0.05) !important;
-        border: 1px solid rgba(102, 126, 234, 0.3) !important;
-        border-radius: 8px !important;
+        background: rgba(255, 255, 255, 0.04) !important;
+        border: 1.5px solid rgba(46, 121, 167, 0.25) !important;
+        border-radius: 12px !important;
         color: white !important;
         font-size: 1rem !important;
-        padding: 1rem !important;
+        padding: 1.25rem !important;
+        transition: all 0.3s ease !important;
+        box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1) !important;
     }
     
     .stTextArea textarea:focus {
-        border-color: #667eea !important;
-        box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.1) !important;
+        border-color: #2e79a7 !important;
+        box-shadow: 
+            0 0 0 3px rgba(46, 121, 167, 0.15) !important,
+            inset 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+        background: rgba(255, 255, 255, 0.06) !important;
     }
     
-    /* Buttons */
-    .stButton>button {
-        background: #667eea;
+    .stTextArea textarea::placeholder {
+        color: rgba(255, 255, 255, 0.35) !important;
+    }
+    
+    /* Premium Primary Button */
+    .stButton>button[kind="primary"] {
+        background: linear-gradient(135deg, #2e79a7 0%, #1e5c7a 100%);
         color: white;
         font-weight: 600;
         border: none;
-        padding: 0.75rem 2rem;
-        border-radius: 8px;
-        font-size: 1rem;
-        transition: all 0.2s ease;
+        padding: 0.875rem 2.5rem;
+        border-radius: 10px;
+        font-size: 1.05rem;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 
+            0 4px 14px rgba(46, 121, 167, 0.4),
+            inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        position: relative;
+        overflow: hidden;
     }
     
-    .stButton>button:hover {
-        background: #5568d3;
-        transform: translateY(-1px);
+    .stButton>button[kind="primary"]::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+        transition: left 0.5s;
     }
     
-    /* Example Buttons */
+    .stButton>button[kind="primary"]:hover::before {
+        left: 100%;
+    }
+    
+    .stButton>button[kind="primary"]:hover {
+        transform: translateY(-2px);
+        box-shadow: 
+            0 6px 20px rgba(46, 121, 167, 0.5),
+            inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        background: linear-gradient(135deg, #3589b8 0%, #2e79a7 100%);
+    }
+    
+    .stButton>button[kind="primary"]:active {
+        transform: translateY(0);
+    }
+    
+    /* Example Buttons - Premium Style */
     div[data-testid="column"] .stButton>button {
-        background: rgba(102, 126, 234, 0.1);
-        border: 1px solid rgba(102, 126, 234, 0.3);
-        color: white;
-        padding: 0.6rem 1rem;
-        font-size: 0.9rem;
+        background: rgba(46, 121, 167, 0.08);
+        border: 1px solid rgba(46, 121, 167, 0.25);
+        color: rgba(255, 255, 255, 0.9);
+        padding: 0.75rem 1.25rem;
+        font-size: 0.95rem;
+        border-radius: 10px;
+        font-weight: 500;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
     }
     
     div[data-testid="column"] .stButton>button:hover {
-        background: rgba(102, 126, 234, 0.2);
+        background: rgba(46, 121, 167, 0.15);
+        border-color: rgba(46, 121, 167, 0.4);
+        transform: translateX(4px);
+        box-shadow: 
+            0 4px 12px rgba(46, 121, 167, 0.2),
+            inset 0 1px 0 rgba(255, 255, 255, 0.1);
     }
     
-    /* Sidebar */
+    /* Sidebar - Premium Dark */
     [data-testid="stSidebar"] {
-        background: rgba(15, 15, 35, 0.95);
-        border-right: 1px solid rgba(102, 126, 234, 0.15);
+        background: linear-gradient(180deg, rgba(10, 14, 35, 0.98) 0%, rgba(15, 22, 41, 0.98) 100%);
+        backdrop-filter: blur(20px);
+        border-right: 1px solid rgba(46, 121, 167, 0.15);
+        box-shadow: 2px 0 30px rgba(0, 0, 0, 0.3);
     }
     
-    /* Metrics */
+    /* Sidebar Text */
+    [data-testid="stSidebar"] h2,
+    [data-testid="stSidebar"] h3,
+    [data-testid="stSidebar"] h4 {
+        color: rgba(255, 255, 255, 0.95);
+        font-weight: 600;
+    }
+    
+    [data-testid="stSidebar"] p,
+    [data-testid="stSidebar"] span,
+    [data-testid="stSidebar"] div {
+        color: rgba(255, 255, 255, 0.8);
+    }
+    
+    /* Premium Metrics */
     [data-testid="stMetricValue"] {
-        color: #667eea;
-        font-size: 1.5rem;
+        color: #2e79a7;
+        font-size: 1.75rem;
         font-weight: 700;
+        text-shadow: 0 2px 8px rgba(46, 121, 167, 0.3);
     }
     
-    /* Progress */
+    [data-testid="stMetricLabel"] {
+        color: rgba(255, 255, 255, 0.7);
+        font-weight: 500;
+        font-size: 0.9rem;
+    }
+    
+    /* Premium Progress Bar */
     .stProgress > div > div > div > div {
-        background: #667eea;
+        background: linear-gradient(90deg, #2e79a7 0%, #1e5c7a 100%);
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(46, 121, 167, 0.4);
     }
     
-    /* Text */
+    .stProgress > div > div > div {
+        background: rgba(46, 121, 167, 0.1);
+        border-radius: 10px;
+    }
+    
+    /* Premium Expander */
+    .streamlit-expanderHeader {
+        background: rgba(46, 121, 167, 0.08);
+        border-radius: 10px;
+        color: white;
+        font-weight: 600;
+        border: 1px solid rgba(46, 121, 167, 0.2);
+        transition: all 0.3s ease;
+    }
+    
+    .streamlit-expanderHeader:hover {
+        background: rgba(46, 121, 167, 0.12);
+        border-color: rgba(46, 121, 167, 0.3);
+    }
+    
+    .streamlit-expanderContent {
+        background: rgba(255, 255, 255, 0.02);
+        border-radius: 0 0 10px 10px;
+        border: 1px solid rgba(46, 121, 167, 0.1);
+        border-top: none;
+    }
+    
+    /* Result Card - Premium */
+    .result-card {
+        background: rgba(255, 255, 255, 0.04);
+        backdrop-filter: blur(20px);
+        padding: 2rem;
+        border-radius: 16px;
+        border: 1px solid rgba(46, 121, 167, 0.2);
+        margin: 1.5rem 0;
+        box-shadow: 
+            0 8px 32px rgba(0, 0, 0, 0.3),
+            inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        color: rgba(255, 255, 255, 0.9);
+        line-height: 1.8;
+    }
+    
+    /* Download Button */
+    .stDownloadButton>button {
+        background: rgba(16, 185, 129, 0.15);
+        border: 1px solid rgba(16, 185, 129, 0.3);
+        color: #10b981;
+        border-radius: 10px;
+        padding: 0.75rem 1.75rem;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+    
+    .stDownloadButton>button:hover {
+        background: rgba(16, 185, 129, 0.25);
+        border-color: rgba(16, 185, 129, 0.5);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(16, 185, 129, 0.3);
+    }
+    
+    /* Premium Slider */
+    .stSlider > div > div > div {
+        background: rgba(46, 121, 167, 0.15);
+    }
+    
+    .stSlider > div > div > div > div {
+        background: #2e79a7;
+        box-shadow: 0 2px 8px rgba(46, 121, 167, 0.4);
+    }
+    
+    /* Premium Divider */
+    hr {
+        border: none;
+        height: 1px;
+        background: linear-gradient(90deg, 
+            transparent, 
+            rgba(46, 121, 167, 0.3), 
+            transparent
+        );
+        margin: 2rem 0;
+    }
+    
+    /* Text Colors */
     p, span, div, label {
         color: rgba(255, 255, 255, 0.9);
     }
     
-    h1, h2, h3 {
+    h1, h2, h3, h4, h5, h6 {
         color: white;
-    }
-    
-    /* Hide branding */
-    #MainMenu, footer, header {visibility: hidden;}
-    
-    /* Status badges */
-    .status-badge {
-        display: inline-block;
-        padding: 0.4rem 0.8rem;
-        border-radius: 6px;
-        font-size: 0.85rem;
         font-weight: 600;
-        margin: 0.2rem 0;
     }
     
-    .status-connected {
-        background: rgba(16, 185, 129, 0.2);
-        color: #10b981;
-        border: 1px solid rgba(16, 185, 129, 0.3);
+    /* Hide Streamlit Branding */
+    #MainMenu, footer, header {
+        visibility: hidden;
     }
     
-    .status-missing {
-        background: rgba(239, 68, 68, 0.2);
-        color: #ef4444;
-        border: 1px solid rgba(239, 68, 68, 0.3);
+    /* Scrollbar */
+    ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
     }
     
-    /* Result card */
-    .result-card {
-        background: rgba(255, 255, 255, 0.05);
-        padding: 1.5rem;
-        border-radius: 12px;
-        border: 1px solid rgba(102, 126, 234, 0.2);
-        margin: 1rem 0;
-        color: white;
-        line-height: 1.7;
+    ::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.02);
     }
     
-    /* Download button */
-    .stDownloadButton>button {
-        background: rgba(16, 185, 129, 0.2);
-        border: 1px solid rgba(16, 185, 129, 0.3);
-        color: #10b981;
-        padding: 0.6rem 1.5rem;
+    ::-webkit-scrollbar-thumb {
+        background: rgba(46, 121, 167, 0.3);
+        border-radius: 4px;
     }
     
-    .stDownloadButton>button:hover {
-        background: rgba(16, 185, 129, 0.3);
+    ::-webkit-scrollbar-thumb:hover {
+        background: rgba(46, 121, 167, 0.5);
     }
 </style>
 """, unsafe_allow_html=True)

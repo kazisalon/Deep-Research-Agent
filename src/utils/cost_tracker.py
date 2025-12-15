@@ -9,9 +9,15 @@ from datetime import datetime
 class CostTracker:
     """Track API usage costs for the research agent."""
     
-    cost_per_search: float = 0.001
-    cost_per_1k_input_tokens: float = 0.00001
-    cost_per_1k_output_tokens: float = 0.00003
+    # Official pricing as of Dec 2024
+    # Tavily: https://tavily.com/pricing
+    cost_per_search: float = 0.001  # $0.001 per search (paid tier)
+    
+    # Groq (Llama 3.3 70B Versatile): https://wow.groq.com/
+    # Free tier: 30 requests/min, 14,400/day - NO CHARGE
+    # Paid tier (if you exceed limits):
+    cost_per_1k_input_tokens: float = 0.00059  # $0.59 per 1M tokens
+    cost_per_1k_output_tokens: float = 0.00079  # $0.79 per 1M tokens
     
     total_cost: float = field(default=0.0, init=False)
     search_calls: int = field(default=0, init=False)
